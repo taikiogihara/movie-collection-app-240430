@@ -37,13 +37,16 @@ const MovieSearch = () => {
 
         fetchSavedMovies();
     }, []);
-    const handleSearch = () => {
-        searchMovies(query);
+
+    const handleSearch = async () => {
+        const searchResults = await searchMovies(query);
+        setMovies(searchResults);
     };
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async (event) => {
         if (event.key === "Enter") {
-            searchMovies(query);
+            const searchResults = await searchMovies(query);
+            setMovies(searchResults);
         }
     };
 
@@ -134,17 +137,13 @@ const MovieSearch = () => {
         );
 
         if (isSaved) {
-            // 映画が保存済みの場合、削除する
             await deleteMovieFromAPI(movie.id);
-            // savedMoviesの状態を更新する
             setSavedMovies(
                 savedMovies.filter((savedMovie) => savedMovie.id !== movie.id)
             );
         } else {
-            // 映画が未保存の場合、詳細情報を取得して保存する
             const details = await getMovieDetails(movie.id);
             await saveMovieToAPI(details);
-            // savedMoviesの状態を更新する
             setSavedMovies([...savedMovies, details]);
         }
     };
@@ -162,6 +161,11 @@ const MovieSearch = () => {
 
     const handleSortCriteriaChange = (event) => {
         setSortCriteria(event.target.value);
+    };
+
+    const handleFetchCollectionMovies = async (collectionId) => {
+        const collectionResults = await fetchCollectionMovies(collectionId);
+        setMovies(collectionResults);
     };
 
     const sortedMovies = movies.sort((a, b) => {
@@ -199,7 +203,7 @@ const MovieSearch = () => {
                 savedMovies={savedMovies}
                 onOpenModal={openModal}
                 onSaveMovie={handleSaveMovie}
-                onFetchCollectionMovies={fetchCollectionMovies}
+                onFetchCollectionMovies={handleFetchCollectionMovies}
             />
             <Modal
                 isOpen={modalIsOpen}

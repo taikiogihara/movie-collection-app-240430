@@ -19,7 +19,14 @@ const MovieList = ({
                 return (
                     <React.Fragment key={movie.id}>
                         {movie.belongs_to_collection && (
-                            <div className="movie-item collection-name">
+                            <div
+                                className="movie-item collection-name"
+                                onClick={() =>
+                                    onFetchCollectionMovies(
+                                        movie.belongs_to_collection.id
+                                    )
+                                }
+                            >
                                 {movie.belongs_to_collection.name}
                             </div>
                         )}
@@ -28,7 +35,6 @@ const MovieList = ({
                             isSaved={isSaved}
                             onOpenModal={onOpenModal}
                             onSaveMovie={onSaveMovie}
-                            onFetchCollectionMovies={onFetchCollectionMovies}
                             onMovieClick={onMovieClick}
                         />
                     </React.Fragment>

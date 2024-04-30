@@ -70,7 +70,7 @@ const App = ({ signOut, user }) => {
             </main>
 
             <footer className="app-footer">
-                <p>&copy; 2023 Movie Collection App. All rights reserved.</p>
+                <p>Movie Collection App</p>
             </footer>
         </div>
     );

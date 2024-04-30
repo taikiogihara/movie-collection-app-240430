@@ -39,9 +39,9 @@
   cursor: pointer;
 }
 
-.app-header nav button.active {
+/* .app-header nav button.active {
   border-bottom: 2px solid #fff;
-}
+} */
 
 .user-info {
   display: flex;

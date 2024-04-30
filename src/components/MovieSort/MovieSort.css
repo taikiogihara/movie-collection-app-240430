@@ -17,4 +17,5 @@ select {
     cursor: pointer;
     margin-right: 10px;
     border-radius: 4px;
+    height: 40px;
 }

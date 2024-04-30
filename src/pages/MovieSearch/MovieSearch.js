@@ -25,9 +25,9 @@ const MovieSearch = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [sortCriteria, setSortCriteria] = useState("popularity");
 
-    useEffect(() => {
-        fetchSavedMovies();
-    }, []);
+    // useEffect(() => {
+    //     fetchSavedMovies();
+    // }, []);
 
     const fetchSavedMovies = async () => {
         try {
@@ -73,9 +73,9 @@ const MovieSearch = () => {
         return {
             title: movie.title,
             original_title: movie.original_title,
-            japanese_title: movie.japanese_title || "",
+            japanese_title: movie.japanese_title || movie.original_title,
             overview: movie.overview,
-            japanese_overview: movie.japanese_overview || "",
+            japanese_overview: movie.japanese_overview || movie.overview,
             poster_path: movie.poster_path,
             release_date: movie.release_date,
             popularity: movie.popularity,

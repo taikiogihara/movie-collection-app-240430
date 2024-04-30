@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./MovieSearch.css";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
@@ -12,6 +11,8 @@ import {
     getMovieDetails,
 } from "../../api/movieApi";
 import MovieList from "../../components/MovieList/MovieList";
+import { generateClient } from "aws-amplify/api";
+const client = generateClient();
 
 Modal.setAppElement("#root");
 

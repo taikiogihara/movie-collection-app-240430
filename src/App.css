@@ -1,92 +1,82 @@
 .app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #1f1f1f;
-  color: #fff;
+    text-align: center;
+    background-color: #1f1f1f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    padding: 20px;
 }
 
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #333;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1f1f1f;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.app-header h1 {
-  margin: 0;
-  font-size: 1.5rem;
+.signout-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e50914;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.app-header nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.signout-button:hover {
+    background-color: #b2070e;
 }
 
-.app-header nav li {
-  margin-right: 1rem;
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-.app-header nav button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.tabs button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* .app-header nav button.active {
-  border-bottom: 2px solid #fff;
-} */
-
-.user-info {
-  display: flex;
-  align-items: center;
+.tabs button.active {
+    background-color: #e50914;
 }
 
-.user-info p {
-  margin-right: 1rem;
-}
-
-.user-info button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: #e50914;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.app-main {
-  flex-grow: 1;
-  padding: 2rem;
-}
-
-.app-footer {
-  padding: 1rem;
-  background-color: #333;
-  text-align: center;
+.tab-content {
+    width: 100%;
 }
 
 .fade-enter {
-  opacity: 0;
+    opacity: 0;
 }
 
 .fade-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
+    opacity: 1;
+    transition: opacity 300ms ease-in;
 }
 
 .fade-exit {
-  opacity: 1;
+    opacity: 1;
 }
 
 .fade-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-in;
+    opacity: 0;
+    transition: opacity 300ms ease-in;
 }

@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/api";
-import { listMovies } from "../../graphql/queries";
+import { listMovies } from "./graphql/queries";
+import { deleteMovie } from "./graphql/mutations";
 import "./MovieDataViewer.css";
-import MovieList from "../../components/MovieList/MovieList";
-import MovieDetails from "../../components/MovieDetails/MovieDetails";
-import Modal from "react-modal";
-
-Modal.setAppElement("#root");
+import { FaTrash } from "react-icons/fa";
 
 const client = generateClient();
 
 const MovieDataViewer = () => {
     const [savedMovies, setSavedMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const fetchSavedMovies = async () => {
             try {
                 const movieData = await client.graphql({ query: listMovies });
-                setSavedMovies(movieData.data.listMovies.items);
+                const movies = movieData.data.listMovies.items;
+                setSavedMovies(movies);
             } catch (error) {
                 console.error("Error fetching saved movies:", error);
             }
@@ -30,31 +28,97 @@ const MovieDataViewer = () => {
 
     const handleMovieClick = (movie) => {
         setSelectedMovie(movie);
-        setModalIsOpen(true);
     };
 
-    const closeModal = () => {
-        setSelectedMovie(null);
-        setModalIsOpen(false);
+    const handleDeleteMovie = async (movieId) => {
+        setIsDeleting(true);
+        try {
+            await client.graphql({
+                query: deleteMovie,
+                variables: { input: { id: movieId } },
+            });
+            const updatedMovies = savedMovies.filter(
+                (movie) => movie.id !== movieId
+            );
+            setSavedMovies(updatedMovies);
+            setSelectedMovie(null);
+        } catch (error) {
+            console.error("Error deleting movie:", error);
+        }
+        setIsDeleting(false);
+    };
+
+    const getTruncatedOverview = (overview) => {
+        const lines = overview.split("\n");
+        const truncatedLines = lines.slice(0, 5);
+        return truncatedLines.join("\n");
     };
 
     return (
         <div className="movie-data-viewer">
-            <h1>Your Movie Collection</h1>
-            <MovieList movies={savedMovies} onMovieClick={handleMovieClick} />
+            <h2>Saved Movies</h2>
+            <div className="movie-list">
+                {savedMovies.map((movie) => (
+                    <React.Fragment key={movie.id}>
+                        {movie.belongs_to_collection && (
+                            <div className="movie-item collection-name">
+                                {movie.belongs_to_collection.name}
+                            </div>
+                        )}
+                        <div
+                            className="movie-item"
+                            onClick={() => handleMovieClick(movie)}
+                        >
+                            {movie.poster_path && (
+                                <img
+                                    src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                                    alt={movie.title}
+                                />
+                            )}
+                            <div className="movie-info">
+                                <h4>{movie.original_title}</h4>
+                                <p className="clamp-text">
+                                    {getTruncatedOverview(
+                                        movie.japanese_overview ||
+                                            movie.overview
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+                    </React.Fragment>
+                ))}
+            </div>
             {selectedMovie && (
-                <Modal
-                    isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
-                    contentLabel="Movie Details"
-                    className="modal"
-                    overlayClassName="modal-overlay"
-                >
-                    <MovieDetails
-                        movie={selectedMovie}
-                        onCloseModal={closeModal}
-                    />
-                </Modal>
+                <div className="movie-details">
+                    <h3>{selectedMovie.title}</h3>
+                    <p>Original Title: {selectedMovie.original_title}</p>
+                    <p>Japanese Title: {selectedMovie.japanese_title}</p>
+                    <p>Overview: {selectedMovie.overview}</p>
+                    <p>Japanese Overview: {selectedMovie.japanese_overview}</p>
+                    <p>Release Date: {selectedMovie.release_date}</p>
+                    <p>Popularity: {selectedMovie.popularity}</p>
+                    <p>Vote Average: {selectedMovie.vote_average}</p>
+                    <p>Vote Count: {selectedMovie.vote_count}</p>
+                    {selectedMovie.poster_path && (
+                        <img
+                            src={`https://image.tmdb.org/t/p/w200${selectedMovie.poster_path}`}
+                            alt={selectedMovie.title}
+                        />
+                    )}
+                    <button
+                        className="delete-button"
+                        onClick={() => handleDeleteMovie(selectedMovie.id)}
+                        disabled={isDeleting}
+                    >
+                        {isDeleting ? (
+                            "Deleting..."
+                        ) : (
+                            <>
+                                <FaTrash /> Delete
+                            </>
+                        )}
+                    </button>
+                </div>
             )}
         </div>
     );

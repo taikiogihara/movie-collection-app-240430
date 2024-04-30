@@ -1,59 +1,65 @@
 .movie-search {
-    background-color: #1f1f1f;
-    color: #fff;
     padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
 }
 
-.search-and-sort {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.search-and-sort input {
-    flex: 1;
+.search-input {
+    width: 100%;
     padding: 10px;
+    margin-bottom: 20px;
     font-size: 16px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-    margin-right: 10px;
-    border-radius: 4px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.search-and-sort button {
+button {
     padding: 10px 20px;
-    font-size: 16px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    background-color: #e50914;
-    color: #fff;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 10px 0;
 }
 
-.search-and-sort button:hover {
-    background-color: #b2070e;
+button:hover {
+    background-color: #0056b3;
 }
 
-.modal-overlay {
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+.loading {
+    color: #666;
+    font-size: 18px;
+    margin: 20px;
 }
 
 .modal {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
     max-width: 600px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    outline: none;
-    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+.error-message {
+    color: red;
+    margin-top: 20px;
 }

@@ -1,3 +1,7 @@
+import React from "react";
+import MovieItem from "../MovieItem/MovieItem";
+import "./MovieList.css";
+
 const MovieList = ({
     movies,
     savedMovies,
@@ -26,3 +30,5 @@ const MovieList = ({
         </div>
     );
 };
+
+export default MovieList;

@@ -135,7 +135,7 @@ const MovieSearch = () => {
         const isSaved = savedMovies.some(
             (savedMovie) => savedMovie.id === movie.id
         );
-    
+
         if (isSaved) {
             await deleteMovieFromAPI(movie.id);
             setSavedMovies(
@@ -174,19 +174,19 @@ const MovieSearch = () => {
     };
 
     const sortedMovies = movies
-    .filter((movie) => !movie.belongs_to_collection)
-    .sort((a, b) => {
-        if (sortCriteria === "popularity") {
-            return b.popularity - a.popularity;
-        } else if (sortCriteria === "releaseDate") {
-            return new Date(b.release_date) - new Date(a.release_date);
-        } else if (sortCriteria === "title") {
-            const titleA = a.japanese_title || a.original_title;
-            const titleB = b.japanese_title || b.original_title;
-            return titleA.localeCompare(titleB);
-        }
-        return 0;
-    });
+        .filter((movie) => !movie.belongs_to_collection)
+        .sort((a, b) => {
+            if (sortCriteria === "popularity") {
+                return b.popularity - a.popularity;
+            } else if (sortCriteria === "releaseDate") {
+                return new Date(b.release_date) - new Date(a.release_date);
+            } else if (sortCriteria === "title") {
+                const titleA = a.japanese_title || a.original_title;
+                const titleB = b.japanese_title || b.original_title;
+                return titleA.localeCompare(titleB);
+            }
+            return 0;
+        });
 
     return (
         <div className="movie-search">

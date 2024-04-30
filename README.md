@@ -116,3 +116,4 @@ This project is licensed under the [MIT License](LICENSE).
 - [React](https://reactjs.org/)
 - [AWS Amplify](https://aws.amazon.com/amplify/)
 - [The Movie Database API](https://www.themoviedb.org/documentation/api)
+

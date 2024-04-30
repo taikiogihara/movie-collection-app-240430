@@ -135,7 +135,7 @@ const MovieSearch = () => {
         const isSaved = savedMovies.some(
             (savedMovie) => savedMovie.id === movie.id
         );
-
+    
         if (isSaved) {
             await deleteMovieFromAPI(movie.id);
             setSavedMovies(
@@ -143,8 +143,13 @@ const MovieSearch = () => {
             );
         } else {
             const details = await getMovieDetails(movie.id);
-            await saveMovieToAPI(details);
-            setSavedMovies([...savedMovies, details]);
+            const isAlreadySaved = savedMovies.some(
+                (savedMovie) => savedMovie.id === details.id
+            );
+            if (!isAlreadySaved) {
+                await saveMovieToAPI(details);
+                setSavedMovies([...savedMovies, details]);
+            }
         }
     };
 
@@ -168,7 +173,9 @@ const MovieSearch = () => {
         setMovies(collectionResults);
     };
 
-    const sortedMovies = movies.sort((a, b) => {
+    const sortedMovies = movies
+    .filter((movie) => !movie.belongs_to_collection)
+    .sort((a, b) => {
         if (sortCriteria === "popularity") {
             return b.popularity - a.popularity;
         } else if (sortCriteria === "releaseDate") {

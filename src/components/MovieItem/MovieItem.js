@@ -6,7 +6,6 @@ const MovieItem = ({
     isSaved,
     onOpenModal,
     onSaveMovie,
-    onFetchCollectionMovies,
     onMovieClick,
 }) => {
     const handleClick = () => {
@@ -37,20 +36,7 @@ const MovieItem = ({
                         </>
                     )}
                 </h4>
-                {movie.belongs_to_collection && (
-                    <span
-                        className="collection-name"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onFetchCollectionMovies(
-                                movie.belongs_to_collection.id
-                            );
-                        }}
-                    >
-                        {movie.belongs_to_collection.name}
-                    </span>
-                )}
-                <br />
+                {isSaved && <span className="saved-label">Saved</span>}
                 {onSaveMovie && (
                     <button
                         onClick={(e) => {
@@ -58,7 +44,7 @@ const MovieItem = ({
                             onSaveMovie(movie);
                         }}
                     >
-                        {isSaved ? "Saved" : "Save"}
+                        {isSaved ? "Unsave" : "Save"}
                     </button>
                 )}
             </div>

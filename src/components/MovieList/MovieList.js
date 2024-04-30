@@ -1,7 +1,3 @@
-import React from "react";
-import MovieItem from "../MovieItem/MovieItem";
-import "./MovieList.css";
-
 const MovieList = ({
     movies,
     savedMovies,
@@ -16,32 +12,17 @@ const MovieList = ({
                 const isSaved = savedMovies?.some(
                     (savedMovie) => savedMovie.id === movie.id
                 );
-                return (
-                    <React.Fragment key={movie.id}>
-                        {movie.belongs_to_collection && (
-                            <div
-                                className="movie-item collection-name"
-                                onClick={() =>
-                                    onFetchCollectionMovies(
-                                        movie.belongs_to_collection.id
-                                    )
-                                }
-                            >
-                                {movie.belongs_to_collection.name}
-                            </div>
-                        )}
-                        <MovieItem
-                            movie={movie}
-                            isSaved={isSaved}
-                            onOpenModal={onOpenModal}
-                            onSaveMovie={onSaveMovie}
-                            onMovieClick={onMovieClick}
-                        />
-                    </React.Fragment>
+                return movie.belongs_to_collection ? null : (
+                    <MovieItem
+                        key={movie.id}
+                        movie={movie}
+                        isSaved={isSaved}
+                        onOpenModal={onOpenModal}
+                        onSaveMovie={onSaveMovie}
+                        onMovieClick={onMovieClick}
+                    />
                 );
             })}
         </div>
     );
 };
-
-export default MovieList;

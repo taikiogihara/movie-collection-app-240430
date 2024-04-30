@@ -58,3 +58,13 @@
     color: #bfbfbf;
     cursor: pointer;
 }
+
+.saved-label {
+    background-color: #e50914;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-right: 8px;
+}

@@ -1,0 +1,27 @@
+.movie-data-viewer {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 20px;
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    outline: none;
+    margin: auto;
+}

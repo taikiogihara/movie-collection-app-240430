@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# Movie Collection App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a movie collection application built with React, AWS Amplify, and the Movie Database API. It allows users to search for movies, view movie details, and save movies to their personal collection.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- User authentication using Amazon Cognito
+- Movie search functionality powered by the Movie Database API
+- Movie details page with information such as title, overview, release date, cast, and crew
+- Ability to save movies to a personal collection
+- View and manage saved movies in the movie collection page
+- GraphQL API for storing and retrieving movie data using AWS AppSync and Amazon DynamoDB
+- Responsive and modern user interface
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React
+- AWS Amplify
+- Amazon Cognito
+- AWS AppSync
+- Amazon DynamoDB
+- GraphQL
+- The Movie Database API
+- HTML/CSS
+- JavaScript
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+To run the application locally, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository
+2. Install the necessary dependencies using `npm install`
+3. Set up an AWS Amplify project and configure the required services (Authentication, API)
+   - Run `amplify init` to initialize a new Amplify project
+   - Run `amplify add auth` to add authentication using Amazon Cognito
+   - Run `amplify add api` to create a GraphQL API using AWS AppSync
+   - Update the `schema.graphql` file with the necessary data models and queries/mutations
+   - Run `amplify push` to deploy the changes to the cloud
+4. Obtain an API key from the Movie Database API
+5. Update the API key in the `.env` file
+6. Run the application using `npm start`
 
-### `npm run build`
+## Folder Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `src/components`: Contains reusable components used throughout the application
+- `src/pages`: Contains the main pages of the application (Movie Search, Movie Collection)
+- `src/graphql`: Contains GraphQL queries and mutations
+- `src/api`: Contains API configuration and utility functions
+- `amplify`: Contains AWS Amplify configuration files
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Setup and Configuration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Install the required dependencies:
 
-### `npm run eject`
+   ```
+   Copy code
+   
+   npm install react react-dom react-icons react-modal react-transition-group axios aws-amplify @aws-amplify/ui-react
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install the development dependencies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```
+   Copy code
+   
+   npm install -D @babel/core @babel/preset-env @babel/preset-react babel-loader css-loader style-loader webpack webpack-cli webpack-dev-server
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Configure AWS Amplify:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   - Run `amplify configure` to set up your AWS credentials
+   - Run `amplify init` to initialize a new Amplify project
+   - Follow the prompts to set up your project
 
-## Learn More
+4. Add authentication:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   - Run `amplify add auth` to add authentication using Amazon Cognito
+   - Choose the default configuration or customize as needed
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Add the GraphQL API:
 
-### Code Splitting
+   - Run `amplify add api` to create a GraphQL API using AWS AppSync
+   - Choose "GraphQL" as the service type
+   - Select "API key" as the authorization type for simplicity (you can change this later)
+   - Choose "Single object with fields" as the annotation
+   - Update the `schema.graphql` file with the necessary data models and queries/mutations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+6. Deploy the changes:
 
-### Analyzing the Bundle Size
+   - Run `amplify push` to deploy the changes to the cloud
+   - Choose "Y" when asked if you want to generate code for your GraphQL API
+   - Select the desired code generation language target (e.g., JavaScript)
+   - Choose "Yes" to generate/update all possible GraphQL operations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+7. Update the API key:
 
-### Making a Progressive Web App
+   - Obtain an API key from the Movie Database API
+   - Create a `.env` file in the root of the project
+   - Add the following line to the `.env` file: `REACT_APP_TMDB_API_KEY=your_api_key_here`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+8. Run the application:
 
-### Advanced Configuration
+   - Run `npm start` to start the development server
+   - Open the application in your browser at `http://localhost:3000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contributing
 
-### Deployment
+Contributions to the movie collection application are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## License
 
-### `npm run build` fails to minify
+This project is licensed under the [MIT License](LICENSE).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements
+
+- [React](https://reactjs.org/)
+- [AWS Amplify](https://aws.amazon.com/amplify/)
+- [The Movie Database API](https://www.themoviedb.org/documentation/api)

@@ -335,19 +335,27 @@ const MovieSearch = () => {
     return (
         <div className="movie-search">
             <h1>Movie Search</h1>
-            <div className="search-and-sort">
+            <div className="search-container">
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Enter a movie search query"
+                    placeholder="Search..."
+                    className="search-bar"
                 />
-                <MovieSort
-                    sortCriteria={sortCriteria}
-                    onSortCriteriaChange={handleSortCriteriaChange}
-                />
-                <button onClick={handleSearch}>Search</button>
+                <select
+                    value={sortCriteria}
+                    onChange={handleSortCriteriaChange}
+                    className="sort-dropdown"
+                >
+                    <option value="title">Sort by Title</option>
+                    <option value="releaseDate">Sort by Release Date</option>
+                    <option value="popularity">Sort by Popularity</option>
+                </select>
+                <button onClick={handleSearch} className="search-button">
+                    Search
+                </button>
             </div>
             <div className="filters">
                 <select value={selectedGenre} onChange={handleGenreChange}>

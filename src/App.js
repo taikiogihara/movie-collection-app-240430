@@ -23,28 +23,34 @@ const App = ({ signOut, user }) => {
         <div className="app">
             <div className="header">
                 <h1>Hello {user.username}</h1>
+                <div className="tabs">
+                    <button
+                        className={`tab ${
+                            activeTab === "search" ? "active" : ""
+                        }`}
+                        onClick={() => handleTabClick("search")}
+                    >
+                        <i className="fas fa-search"></i> Movie Search
+                    </button>
+                    <button
+                        className={`tab ${
+                            activeTab === "viewer" ? "active" : ""
+                        }`}
+                        onClick={() => handleTabClick("viewer")}
+                    >
+                        <i className="fas fa-collection"></i> Movie Collection
+                    </button>
+                    <button
+                        className={`tab ${
+                            activeTab === "profile" ? "active" : ""
+                        }`}
+                        onClick={() => handleTabClick("profile")}
+                    >
+                        <i className="fas fa-user"></i> User Profile
+                    </button>
+                </div>
                 <button className="signout-button" onClick={signOut}>
                     Sign out
-                </button>
-            </div>
-            <div className="tabs">
-                <button
-                    className={`tab ${activeTab === "search" ? "active" : ""}`}
-                    onClick={() => handleTabClick("search")}
-                >
-                    <i className="fas fa-search"></i> Movie Search
-                </button>
-                <button
-                    className={`tab ${activeTab === "viewer" ? "active" : ""}`}
-                    onClick={() => handleTabClick("viewer")}
-                >
-                    <i className="fas fa-collection"></i> Movie Collection
-                </button>
-                <button
-                    className={`tab ${activeTab === "profile" ? "active" : ""}`}
-                    onClick={() => handleTabClick("profile")}
-                >
-                    <i className="fas fa-user"></i> User Profile
                 </button>
             </div>
 

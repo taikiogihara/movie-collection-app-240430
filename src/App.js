@@ -22,7 +22,7 @@ const App = ({ signOut, user }) => {
     return (
         <div className="app">
             <div className="header">
-                <h3>Hello {user.username}</h3>
+                <p>Hello {user.username}</p>
                 <div className="tabs">
                     <button
                         className={`tab ${

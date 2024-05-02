@@ -306,15 +306,12 @@ const MovieSearch = () => {
     const handleGenreChange = (event) => {
         setSelectedGenre(event.target.value);
     };
-
     const handleYearChange = (event) => {
         setSelectedYear(event.target.value);
     };
-
     const handleRatingChange = (event) => {
         setSelectedRating(event.target.value);
     };
-
     const filteredMovies = sortedMovies.filter((movie) => {
         // Apply genre, year, and rating filters
         if (
@@ -331,7 +328,6 @@ const MovieSearch = () => {
         }
         return true;
     });
-
     return (
         <div className="movie-search">
             <h1>Movie Search</h1>
@@ -405,5 +401,4 @@ const MovieSearch = () => {
         </div>
     );
 };
-
 export default MovieSearch;

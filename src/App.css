@@ -80,3 +80,26 @@
     opacity: 0;
     transition: opacity 300ms ease-in;
 }
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .signout-button {
+        margin-top: 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tabs button {
+        margin: 5px 0;
+    }
+
+    .movie-list {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}

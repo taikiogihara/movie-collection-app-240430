@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import "./MovieSearch.css";
-import MovieDetails from "./MovieDetails";
-import MovieSort from "./MovieSort";
+import MovieDetails from "../../components/MovieDetails/MovieDetails";
+import MovieSort from "../../components/MovieSort/MovieSort";
 import { generateClient } from "aws-amplify/api";
 import { createMovie, updateMovie, deleteMovie } from "./graphql/mutations";
 import { listMovies } from "./graphql/queries";
+import MovieList from "../../components/MovieList/MovieList";
 
 const API_KEY = "5893689a1b35b0083127c388b31bcd75";
 const client = generateClient();
@@ -18,6 +19,13 @@ const MovieSearch = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [savedMovies, setSavedMovies] = useState([]);
     const [sortCriteria, setSortCriteria] = useState("popularity");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [selectedGenre, setSelectedGenre] = useState("");
+    const [selectedYear, setSelectedYear] = useState("");
+    const [selectedRating, setSelectedRating] = useState("");
 
     useEffect(() => {
         const fetchSavedMovies = async () => {
@@ -33,10 +41,12 @@ const MovieSearch = () => {
         fetchSavedMovies();
     }, []);
 
-    const searchMovies = async (query) => {
+    const searchMovies = async (query, page = 1) => {
+        setIsLoading(true);
+        setError(null);
         try {
             const response = await axios.get(
-                `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+                `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`
             );
             const movieResults = response.data.results;
             const moviesWithDetails = await Promise.all(
@@ -45,10 +55,13 @@ const MovieSearch = () => {
                     return { ...movie, ...details };
                 })
             );
-            setMovies(moviesWithDetails);
+            setMovies((prevMovies) => [...prevMovies, ...moviesWithDetails]);
+            setTotalPages(response.data.total_pages);
         } catch (error) {
             console.error("Error fetching movies:", error);
+            setError("Failed to fetch movies. Please try again.");
         }
+        setIsLoading(false);
     };
 
     const fetchCollectionMovies = async (collectionId) => {
@@ -147,12 +160,14 @@ const MovieSearch = () => {
     };
 
     const handleSearch = () => {
+        setMovies([]);
+        setCurrentPage(1);
         searchMovies(query);
     };
 
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
-            searchMovies(query);
+            handleSearch();
         }
     };
 
@@ -280,6 +295,43 @@ const MovieSearch = () => {
         return 0;
     });
 
+    const loadMoreMovies = () => {
+        if (currentPage < totalPages) {
+            const nextPage = currentPage + 1;
+            setCurrentPage(nextPage);
+            searchMovies(query, nextPage);
+        }
+    };
+
+    const handleGenreChange = (event) => {
+        setSelectedGenre(event.target.value);
+    };
+
+    const handleYearChange = (event) => {
+        setSelectedYear(event.target.value);
+    };
+
+    const handleRatingChange = (event) => {
+        setSelectedRating(event.target.value);
+    };
+
+    const filteredMovies = sortedMovies.filter((movie) => {
+        // Apply genre, year, and rating filters
+        if (
+            selectedGenre &&
+            !movie.genres.some((genre) => genre.id === selectedGenre)
+        ) {
+            return false;
+        }
+        if (selectedYear && movie.release_date.slice(0, 4) !== selectedYear) {
+            return false;
+        }
+        if (selectedRating && movie.vote_average < selectedRating) {
+            return false;
+        }
+        return true;
+    });
+
     return (
         <div className="movie-search">
             <h1>Movie Search</h1>
@@ -297,58 +349,38 @@ const MovieSearch = () => {
                 />
                 <button onClick={handleSearch}>Search</button>
             </div>
-            <div className="movie-list">
-                {sortedMovies.map((movie) => {
-                    const isSaved = savedMovies.some(
-                        (savedMovie) => savedMovie.id === movie.id
-                    );
-                    return (
-                        <div key={movie.id} className="movie-item">
-                            <div
-                                className="movie-image"
-                                onClick={() => openModal(movie)}
-                            >
-                                {movie.poster_path ? (
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                                        alt={movie.title}
-                                    />
-                                ) : (
-                                    <div className="no-image">No Image</div>
-                                )}
-                            </div>
-                            <div className="movie-info">
-                                <label onClick={() => openModal(movie)}>
-                                    {movie.original_title}
-                                    {movie.japanese_title && (
-                                        <>
-                                            <br />
-                                            {movie.japanese_title}
-                                        </>
-                                    )}
-                                </label>
-                                <br />
-                                {movie.belongs_to_collection && (
-                                    <span
-                                        className="collection-name"
-                                        onClick={() =>
-                                            fetchCollectionMovies(
-                                                movie.belongs_to_collection.id
-                                            )
-                                        }
-                                    >
-                                        {movie.belongs_to_collection.name}
-                                    </span>
-                                )}
-                                <br />
-                                <button onClick={() => handleSaveMovie(movie)}>
-                                    {isSaved ? "Saved" : "Save"}
-                                </button>
-                            </div>
-                        </div>
-                    );
-                })}
+            <div className="filters">
+                <select value={selectedGenre} onChange={handleGenreChange}>
+                    <option value="">All Genres</option>
+                    {/* Render genre options */}
+                </select>
+                <select value={selectedYear} onChange={handleYearChange}>
+                    <option value="">All Years</option>
+                    {/* Render year options */}
+                </select>
+                <select value={selectedRating} onChange={handleRatingChange}>
+                    <option value="">All Ratings</option>
+                    {/* Render rating options */}
+                </select>
             </div>
+            {isLoading ? (
+                <div className="loading">Loading...</div>
+            ) : error ? (
+                <div className="error-message">{error}</div>
+            ) : (
+                <>
+                    <MovieList
+                        movies={filteredMovies}
+                        savedMovies={savedMovies}
+                        onOpenModal={openModal}
+                        onSaveMovie={handleSaveMovie}
+                        onFetchCollectionMovies={fetchCollectionMovies}
+                    />
+                    {currentPage < totalPages && (
+                        <button onClick={loadMoreMovies}>Load More</button>
+                    )}
+                </>
+            )}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -365,4 +397,5 @@ const MovieSearch = () => {
         </div>
     );
 };
+
 export default MovieSearch;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import MovieSearch from "./MovieSearch";
 import MovieDataViewer from "./MovieDataViewer";
+import UserProfile from "./UserProfile";
 import "./App.css";
 
 import { Amplify } from "aws-amplify";
@@ -39,6 +40,12 @@ const App = ({ signOut, user }) => {
                 >
                     Movie Collection
                 </button>
+                <button
+                    className={activeTab === "profile" ? "active" : ""}
+                    onClick={() => handleTabClick("profile")}
+                >
+                    User Profile
+                </button>
             </div>
 
             <SwitchTransition mode="out-in">
@@ -52,8 +59,10 @@ const App = ({ signOut, user }) => {
                     <div className="tab-content">
                         {activeTab === "search" ? (
                             <MovieSearch />
-                        ) : (
+                        ) : activeTab === "viewer" ? (
                             <MovieDataViewer />
+                        ) : (
+                            <UserProfile user={user} />
                         )}
                     </div>
                 </CSSTransition>

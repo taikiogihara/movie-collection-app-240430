@@ -22,7 +22,7 @@ const MovieDetails = ({ movie, onSaveMovie, onCloseModal }) => {
                     <p key={index}>{member.name} ({member.job})</p>
                 ))}
             </div>
-            <button onClick={() => onSaveMovie(movie.id)} className="save-movie">
+            <button onClick={() => onSaveMovie(movie)} className="save-movie">
                 {movie.saved ? "Saved" : "Save"}
             </button>
         </div>

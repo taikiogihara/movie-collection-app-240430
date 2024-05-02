@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_KEY = "5893689a1b35b0083127c388b31bcd75";
+const cache = {};
 
 export const searchMovies = async (query) => {
     try {
@@ -41,6 +42,10 @@ export const fetchCollectionMovies = async (collectionId) => {
 };
 
 export const getMovieDetails = async (movieId) => {
+    if (cache[movieId]) {
+        return cache[movieId];
+    }
+
     const details = await fetchMovieDetails(movieId);
     const credits = await fetchMovieCredits(movieId);
     const translations = await fetchMovieTranslations(movieId);
@@ -65,6 +70,7 @@ export const getMovieDetails = async (movieId) => {
         details.belongs_to_collection = collectionDetails;
     }
 
+    cache[movieId] = details;
     return details;
 };
 

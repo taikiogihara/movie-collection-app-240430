@@ -5,8 +5,8 @@ import "./MovieSearch.css";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
 import MovieSort from "../../components/MovieSort/MovieSort";
 import { generateClient } from "aws-amplify/api";
-import { createMovie, updateMovie, deleteMovie } from "./graphql/mutations";
-import { listMovies } from "./graphql/queries";
+import { createMovie, updateMovie, deleteMovie } from "../../graphql/mutations";
+import { listMovies } from "../../graphql/queries";
 import MovieList from "../../components/MovieList/MovieList";
 
 const API_KEY = "5893689a1b35b0083127c388b31bcd75";

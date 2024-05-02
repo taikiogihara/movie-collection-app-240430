@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/api";
-import { listMovies } from "./graphql/queries";
-import { deleteMovie } from "./graphql/mutations";
+import { listMovies } from "../../graphql/queries";
+import { deleteMovie } from "../../graphql/mutations";
 import "./MovieDataViewer.css";
 import { FaTrash } from "react-icons/fa";
 import MovieList from "../../components/MovieList/MovieList";

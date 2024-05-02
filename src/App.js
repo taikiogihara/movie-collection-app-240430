@@ -10,7 +10,6 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import config from "./amplifyconfiguration.json";
 
-
 Amplify.configure(config);
 
 const App = ({ signOut, user }) => {
@@ -30,22 +29,22 @@ const App = ({ signOut, user }) => {
             </div>
             <div className="tabs">
                 <button
-                    className={activeTab === "search" ? "active" : ""}
+                    className={`tab ${activeTab === "search" ? "active" : ""}`}
                     onClick={() => handleTabClick("search")}
                 >
-                    Movie Search
+                    <i className="fas fa-search"></i> Movie Search
                 </button>
                 <button
-                    className={activeTab === "viewer" ? "active" : ""}
+                    className={`tab ${activeTab === "viewer" ? "active" : ""}`}
                     onClick={() => handleTabClick("viewer")}
                 >
-                    Movie Collection
+                    <i className="fas fa-collection"></i> Movie Collection
                 </button>
                 <button
-                    className={activeTab === "profile" ? "active" : ""}
+                    className={`tab ${activeTab === "profile" ? "active" : ""}`}
                     onClick={() => handleTabClick("profile")}
                 >
-                    User Profile
+                    <i className="fas fa-user"></i> User Profile
                 </button>
             </div>
 

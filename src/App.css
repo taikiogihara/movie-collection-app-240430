@@ -15,11 +15,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #1f1f1f;
-    color: #fff;
-    width: 100%;
-    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+    padding: 10px;
 }
 
 .signout-button {
@@ -42,6 +40,18 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+}
+
+.tab {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #ddd;
 }
 
 .tabs button {
